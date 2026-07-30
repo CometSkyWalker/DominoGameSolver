@@ -13,12 +13,12 @@
 ## Запуск
 
 ```bash
-python cli.py            # консольная версия, зависимостей нет
-python test_solver.py    # 33 проверки
-python stress_test.py    # жёсткие стресс-тесты на больших данных
+python main.py                  # консольная версия, зависимостей нет
+python tests/test_solver.py     # 33 проверки
+python tests/stress_test.py     # жёсткие стресс-тесты на больших данных
 
 pip install -r requirements.txt
-python gui.py            # окно (нужны customtkinter и pillow)
+python main.py --gui            # окно (нужны customtkinter и pillow)
 ```
 
 Питон от 3.8. Если в Linux не находится tkinter — `apt install python3-tk`.
@@ -145,11 +145,18 @@ D + f1·(f1 − 1) / (2·(f2 + 1))
 ## Файлы
 
 ```
-model.py         поле, ход, раскладка ходов
-solver.py        все четыре режима
-gui.py           окно
-theme.py         цвета и оформление
-cli.py           консольная версия
-test_solver.py   проверки
-stress_test.py   стресс-тесты
+main.py                точка входа: консоль, с --gui окно
+dominoes/
+    model.py           поле, ход, раскладка ходов
+    solver.py          все четыре режима
+    ui/
+        cli.py         консольная версия
+        gui.py         окно
+        theme.py       цвета и оформление
+tests/
+    test_solver.py     33 проверки
+    stress_test.py     стресс-тесты
 ```
+
+Решатель (`dominoes/model.py` и `dominoes/solver.py`) написан на голом Python и от
+интерфейса не зависит — сторонние библиотеки нужны только окну.
