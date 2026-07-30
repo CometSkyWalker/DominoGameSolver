@@ -22,6 +22,23 @@ from dominoes.solver import solve_mode1, solve_mode2, count_mode3, count_mode4
 CELL_CHARS = ".123456789"  # символ клетки: '.' = пусто, цифра = цвет
 
 
+def pause(message="\nНажмите Enter, чтобы закрыть окно..."):
+    """
+    Задержать окно, пока ответ не прочитан.
+
+    При запуске двойным кликом консоль закрывается сразу после последней
+    строки, и ответ увидеть не успеваешь. Пауза это чинит.
+
+    Если ввод идёт не с терминала (запуск через пайп, из скрипта, автотесты),
+    паузы нет — иначе программа зависла бы, ожидая Enter, которого не будет.
+    """
+    if sys.stdin and sys.stdin.isatty():
+        try:
+            input(message)
+        except (EOFError, KeyboardInterrupt):
+            pass
+
+
 def print_grid(grid):
     for row in grid:
         print("   " + " ".join(CELL_CHARS[v] if v != EMPTY else "." for v in row))
@@ -159,6 +176,9 @@ def main():
             print(f"\n>>> Разных картинок: примерно {res.value}")
             print(f"    точно встретилось {res.observed} разных картинок, меньше не будет;")
             print(f"    картинок слишком много, чтобы сосчитать их все.")
+
+    # Ответ напечатан — держим окно, иначе при запуске кликом его не прочитать.
+    pause()
 
 
 if __name__ == "__main__":
