@@ -5,7 +5,7 @@
 import random
 from collections import Counter, namedtuple
 
-from model import (
+from dominoes.model import (
     EMPTY, WILDCARD, Move,
     all_placements, block_cells, empty_grid, to_lists, to_tuple,
 )

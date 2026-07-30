@@ -16,8 +16,8 @@ for _stream in (sys.stdout, sys.stderr, sys.stdin):
     except (AttributeError, ValueError):
         pass
 
-from model import simulate, describe_move, EMPTY
-from solver import solve_mode1, solve_mode2, count_mode3, count_mode4
+from dominoes.model import simulate, describe_move, EMPTY
+from dominoes.solver import solve_mode1, solve_mode2, count_mode3, count_mode4
 
 CELL_CHARS = ".123456789"  # символ клетки: '.' = пусто, цифра = цвет
 

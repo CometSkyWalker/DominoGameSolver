@@ -12,9 +12,9 @@ import tkinter as tk
 import customtkinter as ctk
 from PIL import ImageTk
 
-import theme as T
-from model import EMPTY, Move, block_cells, describe_move, simulate
-from solver import solve_mode1, solve_mode2, count_mode3, count_mode4
+from dominoes.ui import theme as T
+from dominoes.model import EMPTY, Move, block_cells, describe_move, simulate
+from dominoes.solver import solve_mode1, solve_mode2, count_mode3, count_mode4
 
 ctk.set_appearance_mode("dark")
 ctk.set_widget_scaling(1.0)
@@ -614,5 +614,10 @@ class App(ctk.CTk):
             self.play_btn.set_text("▶  Проиграть")
 
 
-if __name__ == "__main__":
+def main():
+    """Открыть окно. Точка входа для main.py --gui."""
     App().mainloop()
+
+
+if __name__ == "__main__":
+    main()

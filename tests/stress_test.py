@@ -1,5 +1,5 @@
 """
-Жёсткие стресс-тесты алгоритма. Запуск: python stress_test.py
+Жёсткие стресс-тесты алгоритма. Запуск: python tests/stress_test.py
 
 Проверяется не «примерами», а сверкой с эталоном (полный перебор) и
 round-trip'ом на больших объёмах случайных данных:
@@ -21,10 +21,15 @@ round-trip'ом на больших объёмах случайных данны
 """
 
 import itertools
+import os
 import random
 import sys
 import time
 from collections import Counter
+
+# Тест лежит в tests/, а пакет dominoes — в корне проекта; добавляем корень
+# в путь, иначе при запуске файлом напрямую import dominoes не найдётся.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 for _stream in (sys.stdout, sys.stderr):
     try:
@@ -32,10 +37,10 @@ for _stream in (sys.stdout, sys.stderr):
     except (AttributeError, ValueError):
         pass
 
-from model import (
+from dominoes.model import (
     all_placements, block_cells, to_lists, to_tuple, empty_grid, simulate,
 )
-from solver import (
+from dominoes.solver import (
     solve_mode1, solve_mode2, count_mode3, count_mode4,
     _feasible_ignoring_counts,
 )

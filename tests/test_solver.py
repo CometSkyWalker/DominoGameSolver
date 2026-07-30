@@ -1,12 +1,18 @@
 """
-Проверки решателя. Запуск: python3 test_solver.py
+Проверки решателя. Запуск: python tests/test_solver.py
 
 Сторонние библиотеки для тестов не используются: результат считается,
 сравнивается с ожидаемым и печатается «ок» или «ошибка». Отдельно
 проверяются каверзные случаи, где легко ошибиться.
 """
 
+import os
 import sys
+
+# Тест лежит в tests/, а пакет dominoes — в корне проекта. При запуске
+# файлом напрямую Python кладёт в путь только папку скрипта, поэтому корень
+# добавляется вручную — иначе import dominoes не найдётся.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 for _stream in (sys.stdout, sys.stderr):
     try:
@@ -15,8 +21,8 @@ for _stream in (sys.stdout, sys.stderr):
         pass
 
 from collections import Counter
-from model import simulate, Move
-from solver import (
+from dominoes.model import simulate, Move
+from dominoes.solver import (
     solve_mode1, solve_mode2, count_mode3, count_mode4,
 )
 
@@ -187,7 +193,7 @@ check("[1,1] на 2x2 -> 9 конфигураций", r.value == 9 and r.exact)
 # Главная проверка подсчёта: быстрый способ сравнивается с перебором в лоб.
 # На маленьких полях ответы обязаны совпасть.
 def _ref_mode4(n, seq):
-    from model import all_placements, block_cells, to_lists, to_tuple, empty_grid
+    from dominoes.model import all_placements, block_cells, to_lists, to_tuple, empty_grid
     places = all_placements(n)
     finals = set()
 
@@ -226,7 +232,7 @@ for _ in range(200):
     k = random.choice([1, 2, 3])
     # Картинка складывается случайными ходами. Раз она получена ходами,
     # решатель обязан её разобрать.
-    from model import all_placements, block_cells, to_lists, to_tuple, empty_grid
+    from dominoes.model import all_placements, block_cells, to_lists, to_tuple, empty_grid
     places = all_placements(n)
     grid = to_lists(empty_grid(n))
     placed = Counter()
@@ -258,7 +264,7 @@ print("== Исчерпывающая сверка достижимости (n=2,
 # Сплошная проверка. На поле 2 на 2 с двумя цветами всего 81 картинка.
 # Сначала перебором находится, какие из них вообще собираются, затем
 # результат сверяется с ответом решателя.
-from model import all_placements, block_cells, to_lists, to_tuple, empty_grid
+from dominoes.model import all_placements, block_cells, to_lists, to_tuple, empty_grid
 import itertools
 
 n, k = 2, 2
